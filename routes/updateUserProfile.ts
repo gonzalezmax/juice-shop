@@ -21,7 +21,7 @@ module.exports = function updateUserProfile () {
         if (user != null) {
           challengeUtils.solveIf(challenges.csrfChallenge, () => {
             return ((req.headers.origin?.includes('://htmledit.squarefree.com')) ??
-              (req.headers.referer?.includes('://htmledit.squarefree.com'))) &&
+              (['htmledit.squarefree.com'].includes(new URL(req.headers.referer).hostname))) &&
               req.body.username !== user.username
           })
           void user.update({ username: req.body.username }).then((savedUser: UserModel) => {
